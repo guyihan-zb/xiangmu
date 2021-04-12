@@ -29,8 +29,8 @@ public class DBUtils {
             dataSource.setURL("jdbc:mysql://127.0.0.1:3306/java18blog?characterEncoding=utf-8");
             dataSource.setUser("root");
             // [设置你自己的密码]
-            dataSource.setPassword("22458hijk");
-//            dataSource.setPassword("12345678");
+            //dataSource.setPassword("22458hijk");
+            dataSource.setPassword("12345678");
         }
         return dataSource.getConnection();
     }
