@@ -7,6 +7,8 @@ package thread_0427;
  * @date: 2021-05-05
  * @time: 00:13
  */
+
+//内存的不可见性
 public class Demo27 {
     private static boolean flag = false;
 
