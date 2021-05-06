@@ -18,7 +18,7 @@ public class Demo27 {
             @Override
             public void run() {
                 while (!flag) {
-
+                    //如果while里面有具体的方法，会执行最终的终止条件
                 }
                 System.out.println("终止执行");
             }
