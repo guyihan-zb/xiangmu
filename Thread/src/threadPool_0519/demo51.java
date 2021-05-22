@@ -1,5 +1,6 @@
 package threadPool_0519;
 
+import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -21,11 +22,11 @@ public class demo51 {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("");
+                System.out.println("执行任务：" + new Date());
             }
         },1,3, TimeUnit.SECONDS);
     }

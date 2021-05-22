@@ -24,6 +24,11 @@ public class demo48 {
         service.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
+                /*try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
                 System.out.println("执行任务"+ new Date());
             }
         },1,3, TimeUnit.SECONDS);

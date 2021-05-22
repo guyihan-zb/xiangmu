@@ -20,7 +20,8 @@ public class demo52 {
             service.execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("线程名：" + Thread.currentThread().getName());
+                    System.out.println("线程名：" +
+                            Thread.currentThread().getName());
                 }
             });
         }

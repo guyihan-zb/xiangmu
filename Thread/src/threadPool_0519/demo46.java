@@ -36,6 +36,8 @@ public class demo46 {
         public Thread newThread(Runnable r) {
             Thread thread = new Thread(r);
             //设置线程池的命名
+//            thread.setName("myThreadPool-" + count);
+//            count++;
             thread.setName("myThreadPool-" + count++);
 
             //设置线程池的优先级
