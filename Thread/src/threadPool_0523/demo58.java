@@ -1,6 +1,6 @@
 package threadPool_0523;
 
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +16,7 @@ public class demo58 {
 
         ThreadPoolExecutor executor =
                 new ThreadPoolExecutor(5,5,0,
-                        TimeUnit.SECONDS,new LinkedBlockingDeque<>(5));
+                        TimeUnit.SECONDS,new LinkedBlockingQueue<>(5));
 
         for (int i = 0; i <11 ; i++) {
             int fin = i;

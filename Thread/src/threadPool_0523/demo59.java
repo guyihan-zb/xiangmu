@@ -1,6 +1,6 @@
 package threadPool_0523;
 
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +16,7 @@ public class demo59 {
 
         ThreadPoolExecutor executor =
                 new ThreadPoolExecutor(5,5,0,
-                        TimeUnit.SECONDS,new LinkedBlockingDeque<>(5),new ThreadPoolExecutor.CallerRunsPolicy());
+                        TimeUnit.SECONDS,new LinkedBlockingQueue<>(5),new ThreadPoolExecutor.CallerRunsPolicy());
        // ThreadPoolExecutor.AbortPolicy  默认的拒绝策略
        // ThreadPoolExecutor.DiscardOldestPolicy 忽略新任务  10
        // ThreadPoolExecutor.DiscardPolicy  忽略老任务  5

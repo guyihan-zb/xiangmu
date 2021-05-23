@@ -1,9 +1,6 @@
 package threadPool_0523;
 
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * [description]
@@ -17,7 +14,7 @@ public class demo60 {
 
         ThreadPoolExecutor executor =
                 new ThreadPoolExecutor(5, 5, 0,
-                        TimeUnit.SECONDS, new LinkedBlockingDeque<>(5), new RejectedExecutionHandler() {
+                        TimeUnit.SECONDS, new LinkedBlockingQueue<>(5), new RejectedExecutionHandler() {
                     @Override
                     public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
                         //自定义拒绝策略
