@@ -1,5 +1,7 @@
 package thread_0530;
 
+import java.util.concurrent.CyclicBarrier;
+
 /**
  * [description]
  *
@@ -9,6 +11,11 @@ package thread_0530;
  */
 public class demo101 {
     public static void main(String[] args) {
-
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(5, new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("执行了CyclicBarrier里面的runnable");
+            }
+        });
     }
 }
