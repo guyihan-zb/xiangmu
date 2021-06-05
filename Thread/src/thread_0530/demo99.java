@@ -9,6 +9,11 @@ import java.util.concurrent.CountDownLatch;
  * @date: 2021-05-30
  * @time: 09:44
  */
+
+/*
+* 计数器实例
+*
+* */
 public class demo99 {
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(5);
