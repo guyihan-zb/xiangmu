@@ -8,6 +8,7 @@ package thread_0530;
  * @time: 09:16
  */
 public class demo102 {
+    public static void main(String[] args) {
 
-
+    }
 }
