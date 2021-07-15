@@ -26,11 +26,11 @@ public class DBUtils {
         if (dataSource == null) {
             // 第一次调用
             dataSource = new MysqlDataSource();
-            dataSource.setURL("jdbc:mysql://localhost:3306/java18blog?characterEncoding=utf8&useSSL=false");
+            dataSource.setURL("jdbc:mysql://127.0.0.1:3306/java18blog?characterEncoding=utf-8&useSSL=true");
             dataSource.setUser("root");
             // [设置你自己的密码]
-            //dataSource.setPassword("22458hijk");
-            dataSource.setPassword("12345678");
+            dataSource.setPassword("22458hijk");
+            //dataSource.setPassword("12345678");
         }
         return dataSource.getConnection();
     }
