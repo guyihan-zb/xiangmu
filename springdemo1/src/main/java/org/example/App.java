@@ -20,8 +20,11 @@ public class App {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
-        MyApplication myApplication = context.getBean(MyApplication.class);
-        System.out.println(myApplication);
+        LoginController loginController = context.getBean(LoginController.class);
+        loginController.sayHi();
+
+//        MyApplication myApplication = context.getBean(MyApplication.class);
+//        System.out.println(myApplication);
 
 //        User user = (User) context.getBean("user1");
 //        System.out.println(user);
