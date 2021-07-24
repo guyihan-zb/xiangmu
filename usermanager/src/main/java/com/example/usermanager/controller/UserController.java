@@ -16,6 +16,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.crypto.Data;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * [description]
@@ -108,5 +110,60 @@ public class UserController {
         //todo:权限效验
         data = userMapper.update(userInfo);
         return new ResponseBody<>(0,"",data);
+    }
+
+
+    @RequestMapping("/list")
+    public ResponseBody<HashMap<String,Object>> getList(String name,String address,String email,
+                                                        int cpage,int psize,HttpServletRequest request){
+        //权限效验
+        UserInfo userInfo = SessionUtil.getUserBySession(request);
+        if(userInfo == null){
+            return new ResponseBody<>(-1,"当前用户未登录",null);
+        }
+        Integer isadmin = null;
+        if(userInfo.getIsadmin()==0){
+            isadmin = 0;
+        }
+        name = name.equals("")?null:name;
+        address = address.equals("")?null:address;
+        email = email.equals("")?null:email;
+
+        //跳过查询的条数
+        int skipCount = (cpage-1)*psize;
+        List<UserInfo> list = userMapper.getListByPage(name,address,email,skipCount,psize,isadmin);
+
+        //查询满足条件的条数
+        int tcount = userMapper.getCount(name,address,email,isadmin);
+
+        //总页数
+        int tpage = (int) Math.ceil(tcount/(psize*1.0));
+
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("list",list);
+        data.put("tcount",tcount);
+        data.put("tpage",tpage);
+
+        return new ResponseBody<>(0,"",data);
+    }
+
+    @RequestMapping("/del")
+    public ResponseBody<Integer> del(@RequestParam int id,HttpServletRequest request){
+        //todo:权限效验
+        UserInfo userInfo = SessionUtil.getUserBySession(request);
+        if(userInfo == null){
+            return new ResponseBody<>(-1,"未登录",0);
+        }
+        //判断删除的是否是自己
+        if(id==userInfo.getId()){
+            //删除的是自己
+            return new ResponseBody<>(-2,"不能删除自己",0);
+        }
+        Integer isadmin = null;
+        if(userInfo.getIsadmin() == 0){
+            isadmin = 0;
+        }
+        int result = userMapper.del(id,isadmin);
+        return new ResponseBody<>(0,"",result);
     }
 }

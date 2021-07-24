@@ -69,6 +69,7 @@
             if (result != null && result.status==0) {
                 // 登录成功
                 alert("登录成功");
+                location.href="list.html";
             }else{
                 // todo:安全限制（如果一定时间内输入的用户名和密码错误次数过多，就可以先冻结账户一段时间）
                 alert(result.message);

@@ -31,4 +31,49 @@
         isadmin=#{isadmin}
         where id=#{id}
     </update>
+
+    <select id="getListByPage" resultType="com.example.usermanager.model.UserInfo">
+        select * from userinfo
+        <where>
+            <if test="name!=null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="address!=null">
+                and address=#{address}
+            </if>
+            <if test="email!=null">
+                and email=#{email}
+            </if>
+            <if test="isadmin!=null">
+                and isadmin=#{isadmin}
+            </if>
+        </where>
+        order by id desc
+        limit #{skipCount},#{psize}
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from userinfo
+        <where>
+            <if test="name!=null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="address!=null">
+                and address=#{address}
+            </if>
+            <if test="email!=null">
+                and email=#{email}
+            </if>
+            <if test="isadmin!=null">
+                and isadmin=#{isadmin}
+            </if>
+        </where>
+    </select>
+
+    <delete id="del">
+        delete from userinfo
+        where id=#{id}
+        <if test="isadmin!=null">
+            and isadmin=#{isadmin}
+        </if>
+    </delete>
 </mapper>

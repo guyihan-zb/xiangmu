@@ -56,7 +56,7 @@
             <th>操作</th>
         </tr>
         <tbody id="info">
-                <tr>
+                <!--<tr>
                     <th>
                         <input id="1" type="checkbox">
                     </th>
@@ -89,24 +89,125 @@
                         <a class="btn btn-default btn-sm" href="update.hytml?id=">修改</a>
                         <a class="btn btn-default btn-sm" href="javascript:void(0);">删除</a>
                     </th>
-                </tr>
+                </tr>-->
         </tbody>
     </table>
     <div>
         <nav aria-label="Page navigation">
             <ul id="all" class="pagination">
-                                <li class="active"><a href="javascript:void(0);">1</a></li>
+                                <!--<li class="active"><a href="javascript:void(0);">1</a></li>
                                 <li><a href="javascript:void(0);">2</a></li>
                                 <li><a href="javascript:void(0);">3</a></li>
                                 <li><a href="javascript:void(0);" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span></a>
                                 </li>
                                 <span style="font-size: 20px;margin-left: 10px;"> 共 10 条记录，共 1 页
-                                  </span>
+                                  </span>-->
             </ul>
         </nav>
     </div>
 </div>
 </body>
+    <script>
+        //查询的参数变量定义
+        var name = "";
+        var address = "";
+        var email = "";
+        var cpage = 1;//当前页面
+        var psize = 5;
 
+        function oncli(){
+            name = jQuery("#ipt_name").val().trim();
+            address = jQuery("#ipt_address").val().trim();
+            email = jQuery("#ipt_email").val().trim();
+            // 查询后端接口展示信息
+            getData();
+        }
+
+        //点击分页按钮
+        function cliPage(cp) {
+            cpage = cp;
+            // 查询后端接口展示信息
+            getData();
+        }
+
+
+        //查询后端展示信息
+        function getData() {
+            jQuery.getJSON("/user/list", {
+                "name": name,
+                "address": address,
+                "email": email,
+                "cpage": cpage,
+                "psize": psize
+            }, function (result) {
+                if (result != null && result.data.list != null && result.data.list.length > 0) {
+                    //正确的绑定列表数据
+                    var listHtml = "";
+                    for (var i = 0; i < result.data.list.length; i++) {
+                        var userinfo = result.data.list[i];
+                        listHtml += '<tr>\n' +
+                            '                    <th>\n' +
+                            '                        <input id="' + userinfo.id + '" type="checkbox">\n' +
+                            '                    </th>\n' +
+                            '                    <th>' + userinfo.id + '</th>\n' +
+                            '                    <th>' + userinfo.name + '</th>\n' +
+                            '                    <th>' + userinfo.sex + '</th>\n' +
+                            '                    <th>' + userinfo.age + '</th>\n' +
+                            '                    <th>' + userinfo.address + '</th>\n' +
+                            '                    <th>' + userinfo.qq + '</th>\n' +
+                            '                    <th>' + userinfo.email + '</th>\n' +
+                            '                    <th>' + (userinfo.isadmin == 0 ? "否" : "是") + '</th>\n' +
+                            '                    <th>\n' +
+                            '                        <a class="btn btn-default btn-sm" href="update.html?uid=' + userinfo.id + '">修改</a>\n' +
+                            '                        <a class="btn btn-default btn-sm" href="javascript:del(' + userinfo.id + ');">删除</a>\n' +
+                            '                    </th>\n' +
+                            '                </tr>'
+                    }
+                    jQuery("#info").html(listHtml);
+                    //2.绑定分页信息
+
+                    var tpage = result.data.tpage;//总页数
+                    var pageHtml = "";
+                    if (tpage > 1) {
+                        for (var j = 1; j <= tpage; j++) {
+                            if (cpage == j) {
+                                // 拼接当前页
+                                pageHtml += '<li class="active"><a href="javascript:cliPage(' +
+                                    j + ');">' + j + '</a></li>\n';
+                            } else {
+                                pageHtml += '<li><a href="javascript:cliPage(' +
+                                    j + ');">' + j + '</a></li>\n';
+                            }
+                        }
+                        pageHtml += '<li><a href="javascript:cliPage(' + (cpage + 1) +
+                            ');" aria-label="Next">\n' +
+                            '                    <span aria-hidden="true">&raquo;</span></a>\n' +
+                            '                </li>\n' +
+                            '                <span style="font-size: 20px;margin-left: 10px;"> 共 ' +
+                            result.data.tcount + ' 条记录，共 ' + tpage + ' 页\n' +
+                            '                                  </span>';
+                    }
+                    jQuery("#all").html(pageHtml);
+                }
+            });
+        }
+        getData();
+
+        //单条删除
+        function del(id) {
+            if(confirm("是否进行删除?")){
+                jQuery.getJSON("/user/del",{"id":id},function (result) {
+                    if(result!=null && result.data>0){
+                        alert("恭喜，删除成功");
+                        //删除当前页面
+                        location.href = location.href;
+                    }else{
+                        alert("抱歉，删除失败，请重试！")
+                    }
+                });
+            }
+        }
+
+    </script>
 </html>
