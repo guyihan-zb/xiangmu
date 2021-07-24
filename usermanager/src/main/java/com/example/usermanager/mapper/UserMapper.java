@@ -14,4 +14,10 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     public UserInfo login(String username,String password);
+
+    public int add(UserInfo userInfo);
+
+    public UserInfo getUser(int uid);
+
+    public int update(UserInfo userInfo);
 }

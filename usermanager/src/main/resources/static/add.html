@@ -86,4 +86,89 @@
 
 </div>
 </body>
+<script>
+    //直接显示
+    //jQuery("#adminDiv").show();
+    //jQuery
+    jQuery.getJSON("/user/checkadmin",{},function (result) {
+        if(result!=null && result.data ==1){
+            jQuery("#adminDiv").show();
+        }
+    });
+    //提交方法
+    function mysub() {
+        //获取性别的选中值
+
+        //jQuery("input[name = sex]:checked").val();
+
+        //1.非空效验
+        var name = jQuery("#name");
+        var username = jQuery("#username");
+        var password = jQuery("#password");
+        var password2 = jQuery("#password2");
+        var age = jQuery("#age");
+        var qq = jQuery("#qq");
+        var email = jQuery("#email");
+
+        if(username.val().trim()==""){
+            alert("请先输入登录名！");
+            username.focus();
+            return false;
+        }
+        if(name.val().trim()==""){
+            alert("请先输入用户名！");
+            name.focus();
+            return false;
+        }
+        if(password.val().trim()==""){
+            alert("请先输入密码！");
+            password.focus();
+            return false;
+        }
+        if(password2.val().trim()==""){
+            alert("请先输入密码！");
+            password2.focus();
+            return false;
+        }
+        if(password.val()!=password2.val()){
+            alert("两次输入密码不一致");
+            password.focus();
+            return false;
+        }
+        if(qq.val().trim()==""){
+            alert("请先输入登录名！");
+            qq.focus();
+            return false;
+        }
+        if(age.val().trim()==""){
+            alert("请先输入QQ！");
+            age.focus();
+            return false;
+        }
+        if(email.val().trim()==""){
+            alert("请先输入电子邮箱！");
+            email.focus();
+            return false;
+        }
+        //提交数据到后端
+        jQuery.getJSON("/user/add",{
+            "username":username.val().trim(),
+            "name":name.val().trim(),
+            "password":password.val().trim(),
+            "sex":jQuery("input[name = sex]:checked").val(),
+            "age":age.val().trim(),
+            "address":jQuery("#address").val(),
+            "qq":qq.val().trim(),
+            "email":email.val().trim(),
+            "isadmin":jQuery("input[name=isadmin]:checked").val()
+        },function (result) {
+            if(result!=null && result.status==0 && result.data>0){
+                alert("恭喜，添加成功!");
+                //todo:继续添加或返回列表页
+            }else {
+                alert("抱歉：添加失败"+result.message);
+            }
+        })
+    }
+</script>
 </html>
