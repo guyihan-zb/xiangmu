@@ -76,4 +76,11 @@
             and isadmin=#{isadmin}
         </if>
     </delete>
+
+    <delete id="dels">
+        delete from userinfo where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

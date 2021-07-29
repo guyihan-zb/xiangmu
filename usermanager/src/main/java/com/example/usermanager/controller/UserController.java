@@ -166,4 +166,14 @@ public class UserController {
         int result = userMapper.del(id,isadmin);
         return new ResponseBody<>(0,"",result);
     }
+
+
+    // 多条数据删除
+    @RequestMapping("dels")
+    public ResponseBody<Integer> dels(String ids) {
+        int result = 0;
+        result = userMapper.dels(ids.split(","));
+        System.out.println("ids:" + ids);
+        return new ResponseBody<>(0, "", result);
+    }
 }

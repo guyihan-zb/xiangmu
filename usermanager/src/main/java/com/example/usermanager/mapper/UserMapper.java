@@ -33,4 +33,6 @@ public interface UserMapper {
 
     public int del(int id, Integer isadmin);
 
+
+    public int dels(String[] ids);
 }
