@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>点餐系统管理员页面</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="js/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <v-simple-table v-show=true>
+        <template v-slot:default>
+            <thead>
+            <tr>
+                <th class="text-left">序号</th>
+                <th class="text-left">用户</th>
+                <th class="text-left">状态</th>
+                <th class="text-left">时间</th>
+                <th class="text-left">详情</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="order in orders">
+                <td>1</td>
+                <td>小明</td>
+                <td>
+                    <v-switch></v-switch>
+                </td>
+                <td>2021-10-10 12:13:13</td>
+                <td>
+                    <v-btn color='primary'>查看详情</v-btn>
+                </td>
+            </tr>
+            </tbody>
+        </template>
+    </v-simple-table>
+</div>
+</body>
+<script>
+    let app = new Vue({
+        el:"#app"
+    })
+</script>
+
+</html>
