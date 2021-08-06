@@ -18,4 +18,6 @@ public interface UserMapper {
     public int register(UserInfo userInfo);
 
     public List<UserInfo> getUserList();
+
+    public UserInfo login(UserInfo userInfo);
 }

@@ -19,7 +19,7 @@
         <v-navigation-drawer v-model="drawer" app>
             <!-- 左侧未登录提示 -->
             <v-list dense v-show="!login.isLogin">
-                <v-list-item link v-on:click="doRegister">
+                <v-list-item link v-on:click="reg.showRegister=true">
                     <v-list-item-action>
                         <v-icon>mdi-account-plus</v-icon>
                     </v-list-item-action>
@@ -27,7 +27,7 @@
                         <v-list-item-title>注册</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item link>
+                <v-list-item link v-on:click="login.showLoginDialog=true">
                     <v-list-item-action>
                         <v-icon>mdi-login</v-icon>
                     </v-list-item-action>
@@ -44,7 +44,7 @@
                         <v-icon>mdi-account</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>xxx 您好!</v-list-item-title>
+                        <v-list-item-title>{{login.inputUsername}} 您好!</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item link>
@@ -91,14 +91,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr v-for="dish in dishes">
                                 <td>
                                     <v-icon>mdi-food</v-icon>
-                                    香菜
+                                    {{dish.name}}
                                 </td>
                                 <td>
                                     <v-icon>mdi-cash</v-icon>
-                                    10
+                                    {{dish.price}}
                                 </td>
                                 <td>
                                     <v-switch></v-switch>
@@ -278,8 +278,8 @@
                 user: {
                     name: ""
                 },
-                dishes: [],
-                orders: [],
+                dishes: [],//所有的菜品
+                orders: [],//订单列表
                 // 辅助实现订单显示详情
                 showCurOrder: false,
                 curOrder: {}
@@ -287,11 +287,82 @@
             methods: {
                 // 登录方法
                 doLogin(){
-                    alert("登录按钮");
+                    // 获取用户输入的用户名和密码
+                    let username = app.login.inputUsername;
+                    let password = app.login.inputPassword;
+                    // 非空效验
+                    if (username == "") {
+                        alert("请先输入用户名！");
+                        return false;
+                    }
+                    if (password == "") {
+                        alert("请先输入密码！");
+                        return false;
+                    }
+                    // 方法后端接口，验证用户信息
+                    jQuery.getJSON("/user/login", {
+                        "username": username,
+                        "password": password
+                    }, function (result) {
+                        if (result != null && result.data != null &&
+                            result.data.id > 0) {
+                            // 登录成功
+                            alert("登录成功！");
+                            // 隐藏左侧未登录之前的导航，显示欢迎信息
+                            app.login.isLogin = true;
+                            // 隐藏登录窗体
+                            app.login.showLoginDialog = false;
+                            // 请求后端得到菜品列表
+                            jQuery.getJSON("/dish/list",{},function (result) {
+                                if(result!=null && result.data!=null){
+                                    app.dishes = result.data;
+                                }
+                            });
+                        } else {
+                            // 用户名或密码错误，请重新输入
+                            alert("用户名或密码错误，请重新输入!");
+                        }
+                    });
                 },
                 // 注册方法
-                doRegister(){
-                    alert("点击了注册按钮");
+                doRegister(){// 获取用户输入的值
+                    let username = app.reg.name;
+                    let password = app.reg.password;
+                    let password2 = app.reg.password2;
+                    // 非空效验
+                    if (username == "") {
+                        alert("请先输入用户名！");
+                        return false;
+                    }
+                    if (password == "") {
+                        alert("请先输入密码！");
+                        return false;
+                    }
+                    if (password2 == "") {
+                        alert("请先输入确认密码！");
+                        return false;
+                    }
+                    if (password != password2) {
+                        alert("两次输入的密码不一致，请核对！");
+                        return false;
+                    }
+                    // 请求后端接口实现注册功能
+                    jQuery.getJSON("/user/reg", {
+                        "username": username,
+                        "password": password
+                    }, function (result) {
+                        if (result != null && result.data != null &&
+                            result.data > 0) {
+                            alert("恭喜：添加成功！");
+                            app.reg.name = "";
+                            app.reg.password = "";
+                            app.reg.password2 = "";
+                            // 隐藏注册窗体
+                            app.reg.showRegister = false;
+                        } else {
+                            alert("抱歉：添加失败，请重试！");
+                        }
+                    });
                 }
             },
             computed: {

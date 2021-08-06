@@ -6,6 +6,10 @@
         values (#{username},#{password},0)
     </insert>
     <select id="getUserList" resultType="com.example.ordersys.model.UserInfo">
-
+        select * from userinfo
+    </select>
+    <select id="login" resultType="com.example.ordersys.model.UserInfo">
+        select * from userinfo where
+        username=#{username} and password=#{password}
     </select>
 </mapper>
