@@ -17,4 +17,5 @@ public class OrderInfo {
     private int uid;
     private Date createtime;
     private int status;
+    private String uname;
 }

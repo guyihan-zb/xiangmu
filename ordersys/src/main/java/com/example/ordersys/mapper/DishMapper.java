@@ -16,4 +16,8 @@ import java.util.List;
 public interface DishMapper {
 
     public List<Dish> getList();
+
+    public int add(Dish dish);
+
+    public int del(int id);
 }

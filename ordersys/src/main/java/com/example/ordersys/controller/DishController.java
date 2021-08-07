@@ -28,4 +28,17 @@ public class DishController {
         List<Dish> data = dishMapper.getList();
         return new ResponseBody<>(0,"",data);
     }
+
+    @RequestMapping("/add")
+    public ResponseBody<Integer> add(Dish dish){
+        int data = 0;
+        data = dishMapper.add(dish);
+        return new ResponseBody<>(0,"",data);
+    }
+
+    @RequestMapping("/del")
+    public ResponseBody<Integer> del(int id){
+        int data = dishMapper.del(id);
+        return new ResponseBody<>(0,"",data);
+    }
 }

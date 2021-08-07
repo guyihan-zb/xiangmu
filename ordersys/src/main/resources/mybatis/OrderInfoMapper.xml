@@ -5,7 +5,17 @@
         insert into orderinfo(uid,status) values
         (#{uid},0)
     </insert>
+
+    <update id="up">
+        update orderinfo set status=#{status}
+        where id=#{oid}
+    </update>
+
     <select id="getList" resultType="com.example.ordersys.model.OrderInfo">
         select * from orderinfo where uid=#{uid}
+    </select>
+
+    <select id="getAllList" resultType="com.example.ordersys.model.OrderInfo">
+        select o.*,u.username uname from orderinfo o left join userinfo u on o.uid=u.id order by o.id desc
     </select>
 </mapper>

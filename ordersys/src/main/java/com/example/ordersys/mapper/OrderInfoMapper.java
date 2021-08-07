@@ -16,11 +16,10 @@ import java.util.List;
 public interface OrderInfoMapper {
     public int add(OrderInfo orderInfo);
 
-    public List<OrderInfo> getList();
+    public List<OrderInfo> getList(int uid);
 
     public List<OrderInfo> getAllList();
 
     public int up(int oid, int status);
 
-    public List<OrderInfo> getList(int uid);
 }
