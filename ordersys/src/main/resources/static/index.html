@@ -101,7 +101,7 @@
                                     {{dish.price}}
                                 </td>
                                 <td>
-                                    <v-switch></v-switch>
+                                    <v-switch v-model="dish.select"></v-switch>
                                 </td>
                             </tr>
                         </tbody>
@@ -112,7 +112,7 @@
                         <div class="pa-2">已点 {{selectedDishCount}} 道菜, 总计 {{selectedDishPrice}} 元</div>
                     </v-col>
                     <v-col :cols="2">
-                        <v-btn color="primary" block>下单</v-btn>
+                        <v-btn color="primary" block v-on:click="dishSubmit">下单</v-btn>
                     </v-col>
                 </v-row>
 
@@ -363,14 +363,39 @@
                             alert("抱歉：添加失败，请重试！");
                         }
                     });
-                }
+                },
+
+                // 点餐，点击“下单”
+                dishSubmit() {
+                    if (confirm("确实提交？")) {
+                        let dids = ""; // 菜品 id 集合
+                        app.dishes.forEach(dish => {
+                            if (dish.select) {
+                                dids += (dish.id + ",");
+                            }
+                        });
+                        if (dids != "") {
+                            // 有选中的菜品，请求后端实现点餐
+                            jQuery.getJSON("/order/add",{"dids":dids},function (result) {
+                                if(result!=null && result.data!=null && result.data>0){
+                                    // 添加成功
+                                    alert("恭喜：点餐成功！");
+                                }else{
+                                    alert("抱歉：操作失败，请重试！");
+                                }
+                            });
+                        } else {
+                            alert("请先选中菜品信息！");
+                        }
+                    }
+                },
             },
             computed: {
                 // 点餐的个数
                 selectedDishCount() {
                     let count = 0;
                     this.dishes.forEach(dish => {
-                        if (dish.isSelected) {
+                        if (dish.select) {
                             count++;
                         }
                     });
@@ -380,7 +405,7 @@
                 selectedDishPrice() {
                     let price = 0;
                     this.dishes.forEach(dish => {
-                        if (dish.isSelected) {
+                        if (dish.select) {
                             price += dish.price;
                         }
                     })
