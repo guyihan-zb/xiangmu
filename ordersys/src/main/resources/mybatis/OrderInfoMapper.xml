@@ -5,4 +5,7 @@
         insert into orderinfo(uid,status) values
         (#{uid},0)
     </insert>
+    <select id="getList" resultType="com.example.ordersys.model.OrderInfo">
+        select * from orderinfo where uid=#{uid}
+    </select>
 </mapper>

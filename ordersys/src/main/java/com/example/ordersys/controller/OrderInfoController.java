@@ -75,4 +75,6 @@ public class OrderInfoController {
         data = orderInfoMapper.up(oid,status);
         return new ResponseBody<>(0,"",data);
     }
+
+
 }
