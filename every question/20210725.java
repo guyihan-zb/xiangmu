@@ -25,3 +25,24 @@ public class Solution {
         return leftHead;
     }
 }
+
+
+/** 递归：中序遍历 右 中 左 */
+public class Solution {
+    TreeNode list = null;
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        if(pRootOfTree == null) return pRootOfTree;
+        
+        Convert(pRootOfTree.right);
+        if(list == null){
+            list = pRootOfTree;
+        } else {
+            list.left = pRootOfTree;
+            pRootOfTree.right = list;
+            list = pRootOfTree;
+        }
+        Convert(pRootOfTree.left);
+        
+        return list;
+    }
+}
