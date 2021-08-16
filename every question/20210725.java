@@ -46,3 +46,34 @@ public class Solution {
         return list;
     }
 }
+
+
+/** 非递归 */
+import java.util.Stack;
+public class Solution {
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        if(pRootOfTree == null) return pRootOfTree;
+        
+        TreeNode list = null;
+        Stack<TreeNode> s = new Stack<>();
+        while(pRootOfTree != null || !s.isEmpty()){
+            if(pRootOfTree != null) {
+                s.push(pRootOfTree);
+                pRootOfTree = pRootOfTree.right;
+            } else {
+                pRootOfTree = s.pop();
+                if(list == null)
+                    list = pRootOfTree;
+                else {
+                    list.left = pRootOfTree;
+                    pRootOfTree.right = list;
+                    list = pRootOfTree;
+                }
+                pRootOfTree = pRootOfTree.left;
+            }
+        }
+        
+        return list;
+    }
+}
+}
