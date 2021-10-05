@@ -8,3 +8,19 @@ public class Solution {
         return sum>>1;
     }
 }
+
+
+public class Solution {
+    public int Add(int num1,int num2) {
+        if(num2>0){
+            for (int i = 0; i < num2; i++) {
+                num1++;
+            }
+        }else{
+            for(int i=0;i>num2;i--){
+                num1--;
+            }
+        }
+        return num1;
+    }
+}
